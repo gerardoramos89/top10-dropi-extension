@@ -3,11 +3,11 @@
   const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
 
   // ⚠️ Reemplaza esto por el Product ID real de tu producto en Gumroad antes de publicar.
-  const GUMROAD_PRODUCT_ID = 'REEMPLAZA_CON_TU_PRODUCT_ID';
+  const GUMROAD_PRODUCT_ID = '6F0E4C97-B72A4E69-A11BF6C4-AF6517E7';
   // ⚠️ Link público de tu producto en Gumroad (el que compartes con clientes).
-  const GUMROAD_PRODUCT_URL = 'https://gumroad.com/l/REEMPLAZA_CON_TU_PERMALINK';
+  const GUMROAD_PRODUCT_URL = 'https://coordtss.gumroad.com/l/dmjex';
   // ⚠️ Tu número de WhatsApp para ventas manuales, formato internacional sin "+" ni espacios (ej. 573001234567).
-  const WHATSAPP_NUMBER = '57REEMPLAZA_CON_TU_NUMERO';
+  const WHATSAPP_NUMBER = '573183863469';
 
   // Códigos especiales para pruebas (no pasan por Gumroad). No son secretos reales: cualquiera
   // que lea el código fuente publicado puede verlos. Se les dio forma de código de licencia
