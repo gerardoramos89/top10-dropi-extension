@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Top 10 · Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <div class="eyebrow">Dropshipping &amp; stock propio</div>
+      <h1>Top 10 Tracker</h1>
+    </div>
+    <div class="today mono" id="todayLabel"></div>
+  </header>
+
+  <div class="plan-strip" id="planStrip"></div>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-view="ranking">Ranking</button>
+    <button class="tab-btn" data-view="rentabilidad">Rentab.</button>
+    <button class="tab-btn" data-view="metaads">Meta Ads<span class="pro-tag">PRO</span></button>
+    <button class="tab-btn" data-view="distribucion">Distrib.<span class="pro-tag">PRO</span></button>
+    <button class="tab-btn" data-view="venta">Vender</button>
+    <button class="tab-btn" data-view="historial">Historial</button>
+    <button class="tab-btn" data-view="ajustes">Ajustes</button>
+    <button class="tab-btn" data-view="ayuda">Ayuda</button>
+    <button class="tab-btn" data-view="legal">Legal</button>
+  </nav>
+
+  <!-- RANKING VIEW -->
+  <section class="view active" id="view-ranking">
+
+    <div id="rankboard" class="rankboard">
+      <div class="rankboard-empty">Agrega tu primer producto para ver el ranking.</div>
+    </div>
+
+    <div class="section-title">
+      <div class="st-left">
+        <h2>Tus productos</h2>
+        <button class="audio-btn" title="Escuchar explicación" data-speech="Aquí ves tu top diez de productos. Cada barra te muestra qué tan cerca estás de tu meta mensual. El número de color junto al nombre es tu margen real: verde es rentable, amarillo es ajustado, y rojo significa que estás perdiendo plata con ese producto. Agrega uno nuevo con el botón de arriba a la derecha.">🔊</button>
+      </div>
+      <button class="primary" id="btnAddProduct">+ Agregar</button>
+    </div>
+
+    <form class="stack" id="productForm" style="display:none;">
+      <input type="hidden" id="pfId">
+      <div class="row">
+        <div class="field">
+          <label>Nombre</label>
+          <input type="text" id="pfNombre" required>
+        </div>
+        <div class="field">
+          <label>Categoría</label>
+          <input type="text" id="pfCategoria" placeholder="Moda, Hogar...">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>Precio venta</label>
+          <input type="number" id="pfPrecio" min="0">
+        </div>
+        <div class="field">
+          <label>Meta unidades/mes</label>
+          <input type="number" id="pfMeta" min="0">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>Tipo de producto</label>
+          <select id="pfTipo">
+            <option value="dropshipping">Dropshipping (Dropi u otro)</option>
+            <option value="stock">Stock propio</option>
+          </select>
+        </div>
+        <div class="field" id="pfStockWrap">
+          <label>Stock disponible</label>
+          <input type="number" id="pfStock" min="0" placeholder="Ej: 25">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="ghost" id="pfCancel">Cancelar</button>
+        <button type="submit" class="primary">Guardar producto</button>
+      </div>
+    </form>
+
+    <div class="card-list" id="productList"></div>
+    <div class="empty-state" id="productEmpty" style="display:none;">
+      Aún no tienes productos. Agrega los tuyos, sean de dropshipping o de tu propio inventario.
+    </div>
+
+  </section>
+
+  <!-- RENTABILIDAD VIEW -->
+  <section class="view" id="view-rentabilidad">
+    <div class="section-title">
+      <div class="st-left">
+        <h2>Rentabilidad real</h2>
+        <button class="audio-btn" title="Escuchar explicación" data-speech="Esta es tu calculadora de rentabilidad real. Escoge un producto y completa precio, costos y publicidad. El semáforo te dice de un vistazo si ese producto te está dejando plata o no. El dato más importante es el C P A máximo: es el límite de gasto en publicidad antes de empezar a perder dinero.">🔊</button>
+      </div>
+      <span class="hint">por cada 100 pedidos</span>
+    </div>
+
+    <div class="field" style="margin-bottom:12px;">
+      <label>Producto</label>
+      <select id="rentProducto"></select>
+    </div>
+
+    <div class="empty-state" id="rentSinProductos" style="display:none;">
+      Agrega productos en la pestaña <b>Ranking</b> para calcular su rentabilidad.
+    </div>
+
+    <div id="rentBody" style="display:none;">
+
+      <div class="stack rent-form">
+        <div class="row">
+          <div class="field">
+            <label>Precio de venta</label>
+            <input type="number" id="rentPrecio" min="0">
+          </div>
+          <div class="field">
+            <label>Costo proveedor / compra</label>
+            <input type="number" id="rentCosto" min="0">
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label>Flete envío ida</label>
+            <input type="number" id="rentFleteIda" min="0">
+          </div>
+          <div class="field">
+            <label>Flete de retorno</label>
+            <input type="number" id="rentFleteRetorno" min="0">
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label>Empaque / etiqueta</label>
+            <input type="number" id="rentEmpaque" min="0">
+          </div>
+          <div class="field">
+            <label>Comisión pasarela (%)</label>
+            <input type="number" id="rentComision" min="0" max="20" step="0.1" placeholder="Ej: 2.9">
+          </div>
+        </div>
+        <div class="field">
+          <label>Otros gastos por pedido</label>
+          <input type="number" id="rentOtros" min="0" placeholder="Bodega, mano de obra, empleados...">
+        </div>
+        <div class="field">
+          <label>CPA — costo publicidad por pedido</label>
+          <input type="number" id="rentCpa" min="0">
+        </div>
+        <div class="field">
+          <label>Tasa de entrega real: <span class="mono" id="rentTasaLabel">70%</span></label>
+          <input type="range" id="rentTasa" min="40" max="95" value="70">
+          <div class="slider-hint">En Colombia lo típico es 65%–85% con confirmación previa por WhatsApp.</div>
+        </div>
+      </div>
+
+      <div class="semaforo" id="semaforo">
+        <div class="semaforo-dot" id="semaforoDot"></div>
+        <div class="semaforo-text">
+          <div class="semaforo-label" id="semaforoLabel">—</div>
+          <div class="semaforo-sub" id="semaforoSub">Completa los datos del producto</div>
+        </div>
+      </div>
+
+      <button type="button" class="audio-analyze-btn" id="btnAudioAnalisis">
+        <span class="aab-icon">🔊</span>
+        <span class="aab-text">
+          <span class="aab-title">Analizar este producto en voz</span>
+          <span class="aab-sub">Te digo si mantenerlo, mejorarlo o descartarlo</span>
+        </span>
+      </button>
+
+      <div class="kpi-row">
+        <div class="kpi"><div class="label">Utilidad / pedido</div><div class="value" id="kpiUtilidadPedido">—</div></div>
+        <div class="kpi"><div class="label">Margen neto</div><div class="value" id="kpiMargen">—</div></div>
+        <div class="kpi"><div class="label">CPA máximo</div><div class="value" id="kpiCpaMax">—</div></div>
+      </div>
+
+      <div class="stackbar-wrap">
+        <div class="stackbar-title">Por cada 100 pedidos despachados</div>
+        <div class="stackbar" id="stackbar"></div>
+        <div class="stackbar-legend" id="stackbarLegend"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- META ADS VIEW -->
+  <section class="view" id="view-metaads">
+    <div class="section-title">
+      <div class="st-left">
+        <h2>Conectar Meta Ads</h2>
+        <button class="audio-btn" title="Escuchar explicación" data-speech="Aquí conectas tu cuenta de publicidad de Facebook e Instagram. Pega tu token y tu I D de cuenta, y voy a traer el gasto real de cada campaña. Luego aplicas ese costo directo al producto correspondiente, para que tu cálculo de rentabilidad use tus números reales de publicidad, no un estimado.">🔊</button>
+      </div>
+    </div>
+
+    <div id="metaLockedBanner" class="lock-banner" style="display:none;">
+      🔒 Función <b>Pro</b> — <a href="#" id="metaLockedLink">actívala en Ajustes</a> para conectar de verdad tu cuenta de Meta Ads.
+    </div>
+
+    <div id="metaUnlocked" class="lockable">
+      <div class="stack" id="metaConnectForm">
+        <div class="field">
+          <label>ID de cuenta publicitaria</label>
+          <input type="text" id="metaAccountId" placeholder="act_1234567890">
+        </div>
+        <div class="field">
+          <label>Token de acceso</label>
+          <input type="password" id="metaToken" placeholder="EAAB...">
+        </div>
+        <div class="form-actions" style="justify-content:space-between; align-items:center;">
+          <button type="button" class="ghost" id="metaHowTo">¿Cómo consigo esto?</button>
+          <button type="button" class="primary" id="metaFetchBtn">Traer campañas (30 días)</button>
+        </div>
+      </div>
+
+      <div class="howto-box" id="metaHowToBox" style="display:none;">
+        1. Entra a <b>developers.facebook.com/tools/explorer</b> con tu cuenta de Facebook.<br>
+        2. Selecciona (o crea) una App propia.<br>
+        3. En "Permissions" agrega <b>ads_read</b> y genera el token.<br>
+        4. Copia el token aquí. Dura ~1-2 horas (o uno de larga duración desde Business Settings).<br>
+        5. Tu ID de cuenta está en Ads Manager, formato <b>act_XXXXXXXXXX</b>.
+      </div>
+
+      <div id="metaStatus" class="empty-state" style="display:none;"></div>
+      <div id="metaResults"></div>
+    </div>
+  </section>
+
+  <!-- DISTRIBUCIÓN VIEW -->
+  <section class="view" id="view-distribucion">
+    <div class="section-title">
+      <div class="st-left">
+        <h2>Distribución de tus 10 productos</h2>
+        <button class="audio-btn" title="Escuchar explicación" data-speech="Esta gráfica te muestra de dónde viene realmente tu plata. Puedes verla por ingresos, por utilidad, o por gasto en publicidad. Así identificas rápido cuál producto es tu verdadero motor de ganancias, y cuál te está consumiendo presupuesto de anuncios sin aportar tanto.">🔊</button>
+      </div>
+    </div>
+
+    <div id="distLockedBanner" class="lock-banner" style="display:none;">
+      🔒 Función <b>Pro</b> — <a href="#" id="distLockedLink">actívala en Ajustes</a> para ver de dónde viene realmente tu plata.
+    </div>
+
+    <div id="distUnlocked" class="lockable">
+      <div class="dist-tabs" id="distMetricTabs">
+        <button class="dist-tab-btn active" data-metric="ingresos">Ingresos</button>
+        <button class="dist-tab-btn" data-metric="utilidad">Utilidad</button>
+        <button class="dist-tab-btn" data-metric="gasto">Gasto en Ads</button>
+      </div>
+
+      <div class="donut-row">
+        <div class="donut-wrap">
+          <div class="donut" id="donutChart"></div>
+          <div class="donut-center" id="donutCenter"></div>
+        </div>
+        <div class="donut-legend" id="donutLegend"></div>
+      </div>
+
+      <div class="empty-state" id="distEmpty" style="display:none;">
+        Registra ventas y completa datos de rentabilidad en tus productos para ver esta gráfica.
+      </div>
+    </div>
+  </section>
+
+  <!-- VENTA VIEW -->
+  <section class="view" id="view-venta">
+    <div class="section-title"><h2>Registrar venta</h2></div>
+
+    <form class="stack" id="formVenta">
+      <div class="field">
+        <label>Producto</label>
+        <select id="ventaProducto" required></select>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>Unidades</label>
+          <input type="number" id="ventaUnidades" min="1" value="1" required>
+        </div>
+        <div class="field">
+          <label>Valor total</label>
+          <input type="number" id="ventaValor" min="0" placeholder="89000" required>
+        </div>
+      </div>
+      <div class="field">
+        <label>Fecha</label>
+        <input type="date" id="ventaFecha" required>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="primary">Registrar venta</button>
+      </div>
+    </form>
+
+    <div class="empty-state" id="ventaSinProductos" style="display:none;">
+      Primero agrega productos en la pestaña <b>Ranking</b>.
+    </div>
+  </section>
+
+  <!-- HISTORIAL VIEW -->
+  <section class="view" id="view-historial">
+    <div class="kpi-row" id="kpiRow"></div>
+
+    <div class="section-title">
+      <h2>Historial</h2>
+      <span class="hint" id="ventasCount"></span>
+    </div>
+
+    <div class="export-row" id="exportRow">
+      <button class="ghost" id="btnExportCsv">⬇ Exportar CSV <span class="pro-tag">PRO</span></button>
+    </div>
+
+    <div class="sales-list" id="ventasList"></div>
+    <div class="empty-state" id="historialEmpty" style="display:none;">
+      Todavía no has registrado ventas.
+    </div>
+  </section>
+
+  <!-- AJUSTES VIEW -->
+  <section class="view" id="view-ajustes">
+    <div class="section-title"><h2>Moneda y país</h2></div>
+    <div class="stack">
+      <div class="field">
+        <label>País / moneda</label>
+        <select id="setCountry">
+          <option value="CO">Colombia — COP</option>
+          <option value="MX">México — MXN</option>
+          <option value="CL">Chile — CLP</option>
+          <option value="PE">Perú — PEN</option>
+          <option value="EC">Ecuador — USD</option>
+          <option value="PA">Panamá — USD</option>
+          <option value="AR">Argentina — ARS</option>
+          <option value="GT">Guatemala — GTQ</option>
+          <option value="CR">Costa Rica — CRC</option>
+          <option value="US">Otro / USD genérico</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section-title"><h2>Resumen por correo</h2></div>
+    <div class="stack">
+      <div class="field">
+        <label>Tu correo</label>
+        <input type="email" id="setEmail" placeholder="tucorreo@ejemplo.com">
+      </div>
+      <div class="row" style="align-items:center;">
+        <label class="switch-row">
+          <input type="checkbox" id="setResumenAuto" checked>
+          <span>Aviso automático <span class="pro-tag">PRO</span></span>
+        </label>
+      </div>
+      <div class="field">
+        <label>Frecuencia</label>
+        <select id="setFrecuencia">
+          <option value="diario">Diario</option>
+          <option value="semanal">Semanal</option>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="primary" id="btnEnviarResumen">✉ Enviar resumen ahora</button>
+      </div>
+      <div class="slider-hint" id="emailModeHint">
+        Sin EmailJS configurado: esto abre tu app de correo con el resumen ya escrito.
+      </div>
+    </div>
+
+    <div class="section-title"><h2>Envío 100% automático (EmailJS)</h2></div>
+    <div class="stack">
+      <div class="row" style="align-items:center;">
+        <label class="switch-row">
+          <input type="checkbox" id="setEmailjsEnabled">
+          <span>Usar EmailJS en vez de abrir mi correo</span>
+        </label>
+      </div>
+      <div class="field">
+        <label>Service ID</label>
+        <input type="text" id="setEmailjsService" placeholder="service_xxxxxxx">
+      </div>
+      <div class="field">
+        <label>Template ID</label>
+        <input type="text" id="setEmailjsTemplate" placeholder="template_xxxxxxx">
+      </div>
+      <div class="field">
+        <label>Public Key</label>
+        <input type="text" id="setEmailjsKey" placeholder="tu_public_key">
+      </div>
+      <div class="form-actions">
+        <button type="button" class="ghost" id="btnTestEmailjs">Enviar correo de prueba</button>
+      </div>
+      <div class="howto-box">
+        1. Crea cuenta gratis en <b>emailjs.com</b> (200 correos/mes gratis).<br>
+        2. Agrega un "Email Service" (conecta tu Gmail u otro).<br>
+        3. Crea un "Email Template" con variables <b>{{to_email}}</b>, <b>{{subject}}</b>, <b>{{message}}</b> — en el campo "To Email" del template pon <b>{{to_email}}</b>.<br>
+        4. Copia Service ID, Template ID y Public Key aquí (Account → General).<br>
+        5. En <b>Account → Security</b>, si existe un "Allowlist" de dominios, agrega <b>chrome-extension://TU_ID_DE_EXTENSION</b> (lo ves en chrome://extensions).
+      </div>
+    </div>
+
+    <div class="section-title"><h2>Datos</h2></div>
+    <div class="stack">
+      <div class="form-actions" style="justify-content:flex-start; gap:8px;">
+        <button type="button" class="ghost" id="btnExportCsv2">⬇ Exportar productos + ventas (CSV) <span class="pro-tag">PRO</span></button>
+      </div>
+    </div>
+
+    <div class="section-title"><h2>Plan</h2></div>
+    <div class="stack">
+      <div id="planInfo" class="plan-info"></div>
+
+      <div class="plan-compare">
+        <div class="plan-col">
+          <div class="plan-col-title">Free</div>
+          <ul>
+            <li>Hasta 3 productos</li>
+            <li>Rentabilidad básica</li>
+            <li>Registro de ventas</li>
+            <li>Tu moneda local</li>
+          </ul>
+        </div>
+        <div class="plan-col pro">
+          <div class="plan-col-title">Pro</div>
+          <ul>
+            <li>Hasta 10 productos</li>
+            <li>Conexión con Meta Ads</li>
+            <li>Exportar CSV</li>
+            <li>Resumen diario o semanal automático</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="plan-custom-box">
+        <div class="plan-custom-title">✨ Personalizada</div>
+        <div class="plan-custom-desc">
+          ¿Necesitas más de 10 productos, varias marcas o tiendas, o una función que no existe todavía? Hablemos y armamos una versión hecha a tu medida.
+        </div>
+        <button type="button" class="ghost" id="btnComprarPersonalizada">💬 Pedir versión personalizada</button>
+      </div>
+
+      <div class="buy-row">
+        <button type="button" class="primary" id="btnComprarGumroad">🛒 Comprar Pro</button>
+        <button type="button" class="ghost" id="btnComprarWhatsapp">💬 Comprar por WhatsApp</button>
+      </div>
+      <div class="slider-hint">Al comprar te llega el código de licencia por correo en minutos.</div>
+
+      <div class="field" style="margin-top:6px;">
+        <label>¿Ya tienes tu código? Actívalo aquí</label>
+        <input type="text" id="setLicencia" placeholder="XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX">
+      </div>
+      <div class="form-actions">
+        <button type="button" class="primary" id="btnActivarPro">Verificar y activar Pro</button>
+        <button type="button" class="ghost" id="btnVolverFree">Volver a Free</button>
+      </div>
+      <div id="licenciaStatus" class="empty-state" style="display:none;"></div>
+    </div>
+  </section>
+
+  <!-- AYUDA VIEW -->
+  <section class="view" id="view-ayuda">
+    <div class="section-title">
+      <div class="st-left">
+        <h2>Guía rápida</h2>
+        <button class="audio-btn" title="Escuchar explicación" data-speech="Hola, soy tu asistente de esta aplicación. Aquí abajo encuentras una guía rápida de todo: cómo agregar productos, cómo usar la calculadora de rentabilidad, cómo conectar tus campañas de publicidad, y cómo sacarle el máximo provecho cada día. Dale clic a cualquier pregunta para abrirla.">🔊</button>
+      </div>
+    </div>
+
+    <details class="faq" open>
+      <summary>1. ¿Cómo empiezo?</summary>
+      <div class="faq-body">
+        Ve a <b>Ranking</b> → "+ Agregar" y crea tu producto: nombre, categoría, precio y meta mensual.
+        Elige el <b>tipo</b>: "Dropshipping" (Dropi u otro proveedor) o "Stock propio" — si es stock propio, indicas cuántas unidades tienes y se van descontando solas con cada venta.
+        El plan Free permite hasta 3 productos; con Pro subes a 10.
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>2. ¿Cómo uso la calculadora de Rentabilidad?</summary>
+      <div class="faq-body">
+        En la pestaña <b>Rentab.</b> eliges un producto y completas: precio de venta, costo del proveedor/compra, flete de ida, flete de retorno y tu CPA (costo de publicidad por pedido). Ajusta el slider de <b>tasa de entrega real</b> — en Colombia lo típico es 65%–85%.
+        <br><br>
+        El <b>semáforo</b> te dice de un vistazo:
+        <br>🟢 Verde (rentable): margen ≥15%.
+        <br>🟡 Amarillo (ajustado): margen entre 5% y 15% — poco margen de error.
+        <br>🔴 Rojo (pérdida): margen menor a 5%, o negativo.
+        <br><br>
+        El dato más útil es el <b>CPA máximo</b>: el tope de gasto en publicidad por pedido antes de empezar a perder plata con ese producto.
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>3. ¿Cómo conecto Meta Ads y lo asocio a mi producto?</summary>
+      <div class="faq-body">
+        En <b>Meta Ads</b> (función Pro) pegas tu ID de cuenta publicitaria y un token con permiso <b>ads_read</b> (instrucciones dentro de esa misma pestaña). Al traer tus campañas, verás gasto, resultados y CPA calculado por campaña.
+        <br><br>
+        Meta no sabe qué campaña vende qué producto — esa asociación la haces tú. Para que el CPA aplicado sea preciso:
+        <br>• Usa <b>1 campaña por producto</b> y pon el nombre del producto en el nombre de la campaña, así la reconoces fácil.
+        <br>• Si varias campañas venden lo mismo, aplica el CPA de <b>cada una por separado</b> y quédate con el más alto (peor caso), no con el promedio — es más conservador.
+        <br>• Revisa el <b>tipo de resultado</b> mostrado (compra, lead, mensaje, clic). Si tu campaña optimiza por mensajes o clics, ese CPA no es el costo real por venta — en ese caso ingresa el CPA a mano en Rentabilidad.
+        <br>• Vuelve a traer los datos cada semana: un CPA de hace 30 días puede no reflejar lo que pagas hoy.
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>4. ¿Cómo registro ventas y qué pasa con el stock?</summary>
+      <div class="faq-body">
+        En <b>Vender</b> eliges el producto, unidades, valor total y fecha. Si el producto es de "Stock propio", la cantidad disponible se descuenta sola; si quedan 3 unidades o menos, te avisa. El historial completo queda en <b>Historial</b>, con totales de ventas, unidades y facturación.
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>5. ¿Cómo exporto mis datos?</summary>
+      <div class="faq-body">
+        En <b>Historial</b> o en <b>Ajustes</b> (función Pro) el botón "Exportar CSV" descarga dos archivos: <code>productos.csv</code> y <code>ventas.csv</code>, listos para abrir en Excel o Google Sheets. Útil para respaldo, ya que si desinstalas la extensión o limpias datos del navegador, se pierde lo guardado.
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>6. ¿Cómo activo el plan Pro?</summary>
+      <div class="faq-body">
+        Compras la licencia en Gumroad (o Lemon Squeezy), te llega un código por correo, y lo pegas en <b>Ajustes → Plan</b>. La extensión verifica el código en vivo contra Gumroad — no hay truco ni servidor propio de por medio. Con Pro desbloqueas: 10 productos, Meta Ads, exportar CSV y el resumen diario o semanal automático.
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>7. ¿Cómo configuro el envío automático de correos?</summary>
+      <div class="faq-body">
+        En <b>Ajustes → Envío 100% automático (EmailJS)</b> creas una cuenta gratis en emailjs.com, conectas tu correo, y pegas el Service ID, Template ID y Public Key. Actívalo con el switch y el botón "Enviar resumen ahora" (y el aviso diario o semanal) se envían solos, sin abrir tu app de correo. Sin esto configurado, igual funciona: solo se abre tu correo con el resumen ya escrito y le das enviar tú.
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>8. ¿Dónde se guardan mis datos? ¿Son seguros?</summary>
+      <div class="faq-body">
+        Todo (productos, ventas, ajustes, token de Meta) se guarda localmente en este navegador con <code>chrome.storage.local</code> — no pasa por ningún servidor mío. Trata tu token de Meta y tus llaves de EmailJS como contraseñas: no las compartas ni las pegues en otras extensiones. Si limpias los datos del navegador o desinstalas la extensión, se borran — usa "Exportar CSV" para respaldar.
+      </div>
+    </details>
+  </section>
+
+  <!-- LEGAL VIEW -->
+  <section class="view" id="view-legal">
+    <div class="section-title"><h2>Legal</h2></div>
+
+    <div class="legal-disclaimer">
+      ⚠️ Esto es una <b>plantilla general de referencia</b>, no es asesoría legal. Las leyes cambian y cada negocio es distinto — antes de publicar y cobrar por esta extensión, revisa estos textos con un abogado (idealmente especializado en propiedad intelectual / derecho comercial en Colombia).
+    </div>
+
+    <div class="legal-box">
+      <h3>Términos de uso (plantilla)</h3>
+      Esta extensión se ofrece "tal cual", sin garantías de ningún tipo. El desarrollador no se hace responsable por decisiones de negocio tomadas con base en los cálculos de la app — son una ayuda de referencia, no asesoría financiera ni contable. El plan Free y Pro se rigen por los límites descritos en la pestaña Ajustes. El uso indebido de las conexiones a Meta Ads (por ejemplo, con tokens que no te pertenecen) es responsabilidad exclusiva de quien lo haga.
+    </div>
+
+    <div class="legal-box">
+      <h3>Política de privacidad (plantilla)</h3>
+      Todos tus datos (productos, ventas, ajustes) se guardan <b>localmente en tu navegador</b> con <code>chrome.storage.local</code> — no se envían a ningún servidor propio de esta extensión. Al usar funciones opcionales, tus datos sí viajan a terceros que tú mismo conectas: tu token de Meta Ads a la API oficial de Meta (graph.facebook.com), tu código de licencia a la API de Gumroad, y el resumen de ventas a EmailJS si lo activas. Ninguno de estos datos pasa por un servidor del desarrollador de esta extensión.
+      <br><br>
+      <b>Aviso de activación:</b> cuando activas el plan Pro (por compra, por prueba o por demo), la extensión envía automáticamente un correo breve al desarrollador con el tipo de activación, tu país (si lo configuraste) y la fecha — únicamente con fines de soporte y estadísticas de uso. <b>No se incluyen tus productos, ventas, ni ningún dato de tu negocio</b> en ese aviso.
+    </div>
+
+    <div class="legal-box">
+      <h3>Derechos de autor y marca — la diferencia importa</h3>
+      En Colombia, el <b>código fuente de software se protege automáticamente por derecho de autor</b> desde el momento en que lo creas (Ley 23 de 1982 y Decisión Andina 351 de 1993) — no necesitas registrarlo para tener el derecho, pero registrarlo ante la <b>Dirección Nacional de Derecho de Autor (DNDA)</b> te da una prueba oficial de fecha y autoría, útil si algún día tienes que defenderlo.
+      <br><br>
+      <b>Una patente es distinta</b> y casi nunca aplica a software "como tal" — ni en Colombia ni en la mayoría de países se patenta código por sí solo (lo maneja la Superintendencia de Industria y Comercio, SIC, y es un proceso pensado para invenciones técnicas, no para programas). Lo que sí puedes registrar en la SIC es la <b>marca</b> (el nombre "Top 10 Tracker", tu logo) si quieres protegerla de que otros la usen.
+      <br><br>
+      Resumiendo lo que normalmente aplica a una app como esta: <b>derecho de autor</b> para el código (automático, registro opcional en DNDA) + <b>registro de marca</b> en la SIC si quieres proteger el nombre/logo. No patente.
+    </div>
+
+    <div class="legal-box">
+      <h3>Persona natural → empresa, el camino típico en Colombia</h3>
+      1. Para empezar a vender ya, muchos lo hacen como <b>persona natural</b>: sacas tu RUT en la DIAN y ya puedes cobrar por Gumroad/WhatsApp.
+      <br>2. Cuando las ventas crezcan, el paso común es constituir una <b>SAS</b> (Sociedad por Acciones Simplificada) en la Cámara de Comercio — es el tipo de sociedad más simple y usado por negocios digitales pequeños en Colombia.
+      <br>3. En cualquiera de las dos etapas, un <b>contador</b> te confirma tu régimen (ordinario, o Régimen Simple de Tributación — RST, popular para negocios pequeños) y tus obligaciones exactas.
+    </div>
+
+    <div class="legal-box">
+      <h3>Facturación electrónica e IVA — cuándo se activa (vigente 2026)</h3>
+      Como persona natural, la DIAN te exige facturar electrónicamente si superas <b>3.500 UVT de ingresos brutos anuales</b> — con la UVT en $52.374 para 2026, eso es aproximadamente <b>$183.309.000 COP al año</b>. Por debajo de ese monto, en general no estás obligado, salvo excepciones (ver abajo).
+      <br><br>
+      <b>Ojo con las excepciones</b> — te obligan a facturar electrónicamente sin importar cuánto factures, si: eres responsable de IVA, te acoges al <b>Régimen Simple de Tributación (SIMPLE)</b>, o tienes más de un establecimiento de comercio. Como esto puede cambiar según tu actividad económica registrada en el RUT, confírmalo con tu contador antes de empezar a cobrar en serio.
+      <br><br>
+      Estas cifras se actualizan cada año con la UVT — no las tomes como fijas para siempre, verifica el valor vigente en dian.gov.co antes de decidir.
+    </div>
+
+    <div class="legal-box">
+      <h3>Vender a nivel internacional siendo residente en Colombia</h3>
+      Puedes ofrecer y cobrar esta extensión a clientes de cualquier país sin problema — no hay restricción para eso. Dos cosas a tener claras:
+      <br><br>
+      <b>1. Gumroad actúa como "Merchant of Record"</b> en muchas de sus ventas: eso significa que Gumroad se encarga de cobrar y remitir el IVA/impuesto de ventas que corresponda en el país del comprador (Unión Europea, algunos estados de EE.UU., etc.), así que tú no tienes que gestionar eso país por país.
+      <br><br>
+      <b>2. Pero tú sí debes declarar en Colombia</b> lo que Gumroad te pague, sin importar de qué país vino el cliente — como residente fiscal colombiano, declaras tu <b>renta mundial</b> ante la DIAN. Si el dinero llega a tu cuenta en Colombia desde el exterior en montos grandes, revisa con tu banco si aplica algún reporte cambiario ante el Banco de la República — para pagos pequeños y recurrentes vía plataformas como Gumroad esto normalmente lo gestiona el intermediario financiero, pero confírmalo con tu contador si tus ingresos empiezan a crecer.
+    </div>
+
+    <div class="legal-box">
+      <h3>Qué información se registra sobre el uso de la extensión</h3>
+      Para que quede en un solo lugar, esto es exactamente lo que se recolecta y nada más:
+      <br><br>
+      • <b>De un usuario Free o Pro normal:</b> nada llega a ti. Todo vive en su navegador.
+      <br>• <b>Cuando alguien activa el plan Pro</b> (compra real, prueba o demo): te llega un correo a ti con el tipo de activación, el país que esa persona configuró (si lo hizo) y la fecha. Nada de productos, ventas, ni datos financieros del cliente.
+      <br>• <b>Si el cliente conecta Meta Ads, Gumroad o EmailJS</b>: esos datos viajan directo desde el navegador del cliente hacia esos servicios — nunca pasan por ti ni por un servidor tuyo.
+      <br><br>
+      Esto es lo que debe reflejar tu política de privacidad publicada — no recolectas ni almacenas datos de negocio de tus clientes, solo un registro mínimo de activaciones para tu propio control.
+    </div>
+
+    <div class="legal-box">
+      <h3>Protección de datos personales (Habeas Data)</h3>
+      En Colombia, el tratamiento de datos personales (como el correo que pide la extensión) se rige por la <b>Ley 1581 de 2012</b> y el Decreto 1377 de 2013. Si tu base de datos de clientes crece (por ejemplo, correos recolectados vía Gumroad o EmailJS), lo correcto es tener una <b>Política de Tratamiento de Datos Personales</b> publicada y, si superas los umbrales que define la Superintendencia de Industria y Comercio (SIC), registrar esa base de datos en el <b>RNBD</b> (Registro Nacional de Bases de Datos). Para el volumen inicial de un producto nuevo esto rara vez aplica de inmediato, pero es bueno tenerlo en el radar a medida que creces.
+    </div>
+
+    <div class="legal-box">
+      <h3>Copyright</h3>
+      © 2026 Gerardo Ramos. Todos los derechos reservados. — Reemplaza este texto con tu nombre/razón social final antes de publicar.
+    </div>
+  </section>
+
+  <div class="footer-note">
+    Sin API pública de Dropi ni de otras plataformas: tú administras tu top 10, registras ventas y calculas tu rentabilidad real. Revisa la pestaña <b>Ayuda</b> para sacarle el máximo provecho a cada función.
+  </div>
+
+</div>
+<script src="popup.js"></script>
+</body>
+</html>
