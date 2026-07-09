@@ -9,10 +9,12 @@
   // ⚠️ Tu número de WhatsApp para ventas manuales, formato internacional sin "+" ni espacios (ej. 573001234567).
   const WHATSAPP_NUMBER = '57REEMPLAZA_CON_TU_NUMERO';
 
-  // Códigos especiales para pruebas (no pasan por Gumroad — cámbialos o quítalos antes de publicar si no los quieres).
-  const TEST_PRO_CODE = 'PRUEBA-PRO-2026';   // activa Pro sobre TUS datos actuales, para que alguien pruebe las funciones.
-  const DEMO_CODE = 'DEMO-2026';             // activa Pro + carga 10 productos, ventas y gasto de Ads simulados, para mostrar la app "viva".
-  const TRIAL_CODE = 'PRUEBA-5DIAS';         // activa Pro por tiempo limitado.
+  // Códigos especiales para pruebas (no pasan por Gumroad). No son secretos reales: cualquiera
+  // que lea el código fuente publicado puede verlos. Se les dio forma de código de licencia
+  // random para que no sean adivinables a simple vista, pero cámbialos o quítalos si no los quieres.
+  const TEST_PRO_CODE = 'QK7M-2X9P-VL4T-8HRW';   // activa Pro sobre TUS datos actuales, para que alguien pruebe las funciones.
+  const DEMO_CODE = 'ZP3K-9WQL-4XMT-2GHD';       // activa Pro + carga 10 productos, ventas y gasto de Ads simulados, para mostrar la app "viva".
+  const TRIAL_CODE = 'RT8N-3LKQ-9XZP-6MWV';      // activa Pro por tiempo limitado.
   const TRIAL_DAYS = 5;                      // 👈 edita este número para cambiar cuántos días dura el Pro de prueba.
 
   // 📬 Notificación A TI (el desarrollador) cada vez que alguien activa Pro — usa TU PROPIA cuenta de EmailJS,
@@ -39,6 +41,12 @@
   };
 
   const todayISO = () => new Date().toISOString().slice(0,10);
+
+  function escapeHtml(str){
+    return String(str==null ? '' : str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
 
   $('#todayLabel').textContent = new Date().toLocaleDateString('es-CO', {
     weekday:'short', day:'numeric', month:'short'
@@ -483,7 +491,7 @@
         <div class="pct">${pct}%</div>
         <div class="bar" style="height:${Math.max(pct,3)}%"></div>
         <div class="num">${String(i+1).padStart(2,'0')}</div>
-        <div class="name" title="${p.nombre}">${p.nombre}</div>
+        <div class="name" title="${escapeHtml(p.nombre)}">${escapeHtml(p.nombre)}</div>
       `;
       board.appendChild(div);
     });
@@ -515,8 +523,8 @@
       card.innerHTML = `
         <div class="rank">${i+1}</div>
         <div class="info">
-          <div class="name">${p.nombre} ${badge}</div>
-          <div class="meta">${p.categoria || 'Sin categoría'} · ${fmtCOP(p.precio)} ${stockTag}</div>
+          <div class="name">${escapeHtml(p.nombre)} ${badge}</div>
+          <div class="meta">${escapeHtml(p.categoria) || 'Sin categoría'} · ${fmtCOP(p.precio)} ${stockTag}</div>
         </div>
         <div class="progress-wrap">
           <div class="progress-bar"><span style="width:${pct}%"></span></div>
@@ -868,7 +876,7 @@
         row.className = 'sale-row';
         row.innerHTML = `
           <div class="date">${v.fecha}</div>
-          <div class="name">${p ? p.nombre : '(eliminado)'}</div>
+          <div class="name">${p ? escapeHtml(p.nombre) : '(eliminado)'}</div>
           <div class="qty">${v.unidades}u</div>
           <div class="val">${fmtCOP(v.valor)}</div>
           <button class="icon danger" data-id="${v.id}" title="Eliminar">✕</button>
@@ -954,7 +962,7 @@
     $('#donutLegend').innerHTML = data.slice(0,10).map((d,i)=>{
       const color = palette[i % palette.length];
       const pct = Math.round((d.valor/total)*100);
-      return `<div class="dl-item"><span class="dl-dot" style="background:${color}"></span><span class="dl-name" title="${d.nombre}">${d.nombre}</span><span class="dl-pct">${pct}%</span></div>`;
+      return `<div class="dl-item"><span class="dl-dot" style="background:${color}"></span><span class="dl-name" title="${escapeHtml(d.nombre)}">${escapeHtml(d.nombre)}</span><span class="dl-pct">${pct}%</span></div>`;
     }).join('');
   }
 
@@ -1100,7 +1108,7 @@
       card.className = 'campaign-card';
       const cardId = 'meta_'+idx;
       card.innerHTML = `
-        <div class="cname" title="${row.campaign_name||''}">${row.campaign_name || 'Campaña sin nombre'}</div>
+        <div class="cname" title="${escapeHtml(row.campaign_name)}">${escapeHtml(row.campaign_name) || 'Campaña sin nombre'}</div>
         <div class="crow"><span>Gasto (30d)</span><b>${fmtCOP(spend)}</b></div>
         <div class="crow"><span>Resultados${result ? ' ('+result.type+')' : ''}</span><b>${result ? result.count : '—'}</b></div>
         <div class="crow"><span>CPA calculado</span><b>${cpa ? fmtCOP(cpa) : '—'}</b></div>

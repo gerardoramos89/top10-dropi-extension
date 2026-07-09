@@ -86,7 +86,7 @@ Pantalla: botón "Comprar Pro" con tema dorado activo.
 
 ## Storyboard verificado — completo
 
-Se armó un harness de prueba local (popup.html/js/css con `chrome.storage`/`chrome.tabs`/`chrome.runtime` simulados) para recorrer la app entera con el código DEMO-2026 sin depender de la extensión real. Con esto se verificaron y capturaron las 8 escenas:
+Se armó un harness de prueba local (popup.html/js/css con `chrome.storage`/`chrome.tabs`/`chrome.runtime` simulados) para recorrer la app entera con el código de demo (ver `DEMO_CODE` en popup.js) sin depender de la extensión real. Con esto se verificaron y capturaron las 8 escenas:
 
 1. Ranking — ✅ capturado, audio verificado
 2. Rentabilidad (caso rentable + caso pérdida) — ✅ capturado, ambos audios verificados
