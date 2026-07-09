@@ -1,0 +1,13 @@
+{
+  "name": "top10-dropi-extension",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Top 10 Tracker — extensión de Chrome para rentabilidad de dropshipping/stock propio.",
+  "scripts": {
+    "build": "node scripts/build.js"
+  },
+  "devDependencies": {
+    "clean-css": "^5.3.3",
+    "terser": "^5.31.0"
+  }
+}

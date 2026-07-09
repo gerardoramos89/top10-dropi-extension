@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Política de Privacidad — Top 10 Tracker</title>
+<style>
+  :root{
+    --ink:#12161d; --panel:#1b212b; --chalk:#f2eee4; --slate:#5b6472;
+    --line:#e3e0d6; --guayaba:#ff7a45; --bg:#fbfaf7;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Segoe UI', Arial, sans-serif; line-height:1.6;
+  }
+  .wrap{ max-width:760px; margin:0 auto; padding:48px 24px 80px; }
+  h1{
+    font-size:2rem; margin:0 0 6px; color:var(--ink);
+  }
+  .subtitle{ color:var(--slate); margin:0 0 40px; font-size:.95rem; }
+  h2{
+    font-size:1.15rem; margin:40px 0 12px; padding-bottom:8px;
+    border-bottom:2px solid var(--guayaba); display:inline-block;
+  }
+  p, li{ font-size:.98rem; color:#2a2f38; }
+  ul{ padding-left:22px; }
+  li{ margin-bottom:8px; }
+  .box{
+    background:#fff; border:1px solid var(--line); border-radius:10px;
+    padding:18px 22px; margin:16px 0;
+  }
+  .table{ width:100%; border-collapse:collapse; margin:12px 0; font-size:.92rem; }
+  .table th, .table td{ text-align:left; padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  .table th{ color:var(--slate); font-weight:600; }
+  code{ background:#f0eee7; padding:2px 6px; border-radius:4px; font-size:.85em; }
+  .placeholder{ color:var(--guayaba); font-weight:600; }
+  .footer{ margin-top:56px; padding-top:20px; border-top:1px solid var(--line); color:var(--slate); font-size:.85rem; }
+  a{ color:var(--guayaba); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Política de Privacidad</h1>
+  <p class="subtitle">Top 10 Tracker — extensión de Chrome · Última actualización: <span class="placeholder">[FECHA]</span></p>
+
+  <div class="box">
+    <strong>Resumen en una frase:</strong> Top 10 Tracker guarda todos tus datos de productos y ventas
+    <strong>localmente en tu propio navegador</strong>. No existe un servidor propio de esta extensión que
+    reciba, almacene o procese tu información de negocio.
+  </div>
+
+  <h2>1. Qué datos guarda la extensión y dónde</h2>
+  <p>Todo lo que registras — productos, ventas, metas, ajustes de moneda y país — se guarda usando
+  <code>chrome.storage.local</code>, el almacenamiento propio de tu navegador. Estos datos:</p>
+  <ul>
+    <li>Nunca salen de tu computador hacia un servidor del desarrollador.</li>
+    <li>Se eliminan si desinstalas la extensión o borras los datos del navegador.</li>
+    <li>No se sincronizan entre dispositivos (a menos que actives explícitamente una función que lo requiera).</li>
+  </ul>
+
+  <h2>2. Servicios de terceros que tú conectas (opcionales)</h2>
+  <p>Algunas funciones son opcionales y, solo si las activas, envían datos directamente desde tu navegador
+  hacia el servicio correspondiente — nunca a través de un servidor del desarrollador:</p>
+
+  <table class="table">
+    <tr><th>Servicio</th><th>Qué se envía</th><th>Cuándo</th></tr>
+    <tr>
+      <td>Meta Ads (Graph API de Facebook)</td>
+      <td>El token de acceso y el ID de cuenta publicitaria que tú mismo ingresas</td>
+      <td>Solo si conectas tu cuenta de Meta Ads en la pestaña correspondiente</td>
+    </tr>
+    <tr>
+      <td>Gumroad</td>
+      <td>El código de licencia que ingresas, para verificar tu compra</td>
+      <td>Solo al activar el plan Pro con una licencia comprada</td>
+    </tr>
+    <tr>
+      <td>EmailJS</td>
+      <td>Tu correo y el resumen de ventas que configures enviar</td>
+      <td>Solo si activas el resumen automático por correo</td>
+    </tr>
+  </table>
+
+  <h2>3. Aviso al desarrollador cuando activas el plan Pro</h2>
+  <p>Cuando activas el plan Pro (por compra, prueba o demo), la extensión envía un correo breve al
+  desarrollador con: el tipo de activación, el país que configuraste (si lo hiciste) y la fecha.
+  Esto es <strong>únicamente con fines de soporte y estadísticas de uso</strong>.
+  <strong>No se incluyen tus productos, tus ventas, ni ningún otro dato de tu negocio</strong> en ese aviso.</p>
+
+  <h2>4. Permisos que pide la extensión y por qué</h2>
+  <table class="table">
+    <tr><th>Permiso</th><th>Para qué se usa</th></tr>
+    <tr><td><code>storage</code></td><td>Guardar tus productos, ventas y ajustes localmente en tu navegador.</td></tr>
+    <tr><td><code>alarms</code></td><td>Revisar periódicamente (una vez por hora) si toca enviar tu resumen de ventas automático.</td></tr>
+    <tr><td><code>notifications</code></td><td>Avisarte en el sistema cuando se envía tu resumen, o si un producto entra en pérdida.</td></tr>
+    <tr><td>Acceso a <code>graph.facebook.com</code></td><td>Traer el gasto real de tus campañas si conectas Meta Ads.</td></tr>
+    <tr><td>Acceso a <code>api.gumroad.com</code></td><td>Verificar tu código de licencia al activar el plan Pro.</td></tr>
+    <tr><td>Acceso a <code>api.emailjs.com</code></td><td>Enviar tu resumen de ventas por correo, si activas esa función.</td></tr>
+  </table>
+
+  <h2>5. Tus derechos sobre tus datos</h2>
+  <p>Como tus datos de negocio viven únicamente en tu navegador, tú tienes control total sobre ellos en
+  todo momento:</p>
+  <ul>
+    <li><strong>Ver o exportar:</strong> desde la pestaña Ajustes puedes exportar tus productos y ventas a CSV.</li>
+    <li><strong>Eliminar:</strong> desinstalando la extensión, o borrando los datos de sitio desde la configuración de Chrome.</li>
+    <li><strong>Corregir:</strong> puedes editar o eliminar cualquier producto o venta directamente desde la app.</li>
+  </ul>
+  <p>Si conectaste servicios de terceros (Meta, Gumroad, EmailJS), tus derechos sobre esos datos también se
+  rigen por la política de privacidad propia de cada uno de esos servicios.</p>
+
+  <h2>6. Menores de edad</h2>
+  <p>Esta extensión está dirigida a personas que operan un negocio (vendedores de dropshipping o stock
+  propio) y no está diseñada ni dirigida a niños.</p>
+
+  <h2>7. Cambios a esta política</h2>
+  <p>Si esta política cambia, se actualizará la fecha al inicio de esta página. Cambios importantes en cómo
+  se manejan tus datos se anunciarán también dentro de la propia extensión.</p>
+
+  <h2>8. Contacto</h2>
+  <p>Si tienes preguntas sobre esta política de privacidad o sobre tus datos, escribe a:
+  <span class="placeholder">[tu-correo@tudominio.com]</span></p>
+
+  <div class="footer">
+    Top 10 Tracker — Dropshipping &amp; Stock Propio.<br>
+    <span class="placeholder">[Reemplaza esta línea con tu nombre o razón social antes de publicar]</span>
+  </div>
+
+</div>
+</body>
+</html>

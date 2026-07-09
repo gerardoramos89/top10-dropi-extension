@@ -1,2 +1,5 @@
 video-frames/
 .claude/settings.local.json
+node_modules/
+dist/
+.claude/scheduled_tasks.lock
