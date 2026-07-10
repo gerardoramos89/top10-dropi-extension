@@ -221,7 +221,7 @@ h1,h2,h3{
 .shot-frame img{ display:block; width:100%; height:520px; object-fit:cover; object-position:top; }
 
 .split-shots{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-.split-shots .shot-frame img{ height:460px; }
+.split-shots .shot-frame img{ height:auto; aspect-ratio:0.6; max-height:460px; }
 .split-shots figure{ margin:0; }
 .split-shots figcaption{
   margin-top:10px; font-size:.78rem; text-align:center; font-weight:600;
