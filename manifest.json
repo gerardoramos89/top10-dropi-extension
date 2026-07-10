@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Top 10 — Tracker de Ventas y Rentabilidad",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Tu ranking de productos, rentabilidad real y progreso de ventas, siempre a un clic en el navegador.",
   "action": {
     "default_popup": "popup.html",
