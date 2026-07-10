@@ -13,6 +13,7 @@
   // que lea el código fuente publicado puede verlos. Se les dio forma de código de licencia
   // random para que no sean adivinables a simple vista, pero cámbialos o quítalos si no los quieres.
   const DEMO_CODE = 'ZP3K-9WQL-4XMT-2GHD';       // activa Pro + carga 10 productos, ventas y gasto de Ads simulados, para mostrar la app "viva".
+  const DEMO_DAYS = 30;                      // 👈 edita este número para cambiar cuántos días dura el Pro del demo.
   const TRIAL_CODE = 'RT8N-3LKQ-9XZP-6MWV';      // activa Pro por tiempo limitado.
   const TRIAL_DAYS = 5;                      // 👈 edita este número para cambiar cuántos días dura el Pro de prueba.
 
@@ -258,12 +259,12 @@
       if(productos.length>0 || ventas.length>0){
         if(!confirm('Esto va a REEMPLAZAR tus productos y ventas actuales con datos de ejemplo (incluye gasto de Ads simulado). ¿Continuar?')) return;
       }
-      plan = 'pro'; planExpiresAt = null;
+      plan = 'pro'; planExpiresAt = Date.now() + DEMO_DAYS*24*60*60*1000;
       savePlan();
       seedDemoData();
       applyPlanUI();
       renderAll();
-      licenciaSetStatus('Demo cargada: 10 productos, ~28 días de ventas y gasto de publicidad simulado (CPA por producto). Explora Ranking, Rentabilidad, Distribución e Historial.', 'ok');
+      licenciaSetStatus(`Demo cargada: 10 productos, ~28 días de ventas y gasto de publicidad simulado (CPA por producto). Pro activo por ${DEMO_DAYS} días. Explora Ranking, Rentabilidad, Distribución e Historial.`, 'ok');
       notifyDevActivation('Demo (DEMO-2026)');
       return;
     }
