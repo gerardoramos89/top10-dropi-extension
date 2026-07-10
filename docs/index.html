@@ -226,6 +226,54 @@ h1,h2,h3{
 .split-shots .cap-good{ color:var(--menta); }
 .split-shots .cap-bad{ color:var(--danger); }
 
+/* ---------- try-it calculator ---------- */
+.try-it{ padding:108px 0; border-bottom:1px solid var(--line); background:var(--panel); }
+.try-head{ max-width:60ch; margin-bottom:48px; }
+.try-head h2{ font-size:clamp(1.7rem,2.8vw,2.3rem); }
+.try-head p{ font-size:1rem; color:var(--slate); margin:16px 0 0; }
+.try-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:start; }
+.try-inputs{
+  display:grid; grid-template-columns:1fr 1fr; gap:18px 20px;
+  background:var(--panel-2); border:1px solid var(--line); border-radius:12px; padding:26px;
+}
+.try-field{ display:flex; flex-direction:column; gap:7px; }
+.try-field-wide{ grid-column:1 / -1; }
+.try-field label{ font-size:.78rem; color:var(--slate); }
+.try-field input[type="number"]{
+  font-family:'IBM Plex Mono'; font-size:.95rem; color:var(--chalk);
+  background:var(--ink); border:1px solid var(--line); border-radius:6px; padding:10px 12px;
+}
+.try-field input[type="number"]:focus{ outline:2px solid var(--menta); outline-offset:1px; }
+.try-field input[type="range"]{ width:100%; accent-color:var(--menta); }
+.try-result{
+  position:sticky; top:84px; background:var(--panel-2); border:1px solid var(--line);
+  border-radius:12px; padding:26px;
+}
+.try-semaforo{ display:flex; align-items:flex-start; gap:14px; }
+.try-semaforo b{ font-family:'Fraunces'; font-size:1.2rem; }
+.try-sub{ font-size:.85rem; color:var(--slate); margin-top:2px; }
+.semaforo-dot{
+  width:14px; height:14px; border-radius:50%; flex:none; margin-top:5px;
+  background:var(--slate);
+}
+.semaforo-dot.rentable{ background:var(--menta); box-shadow:0 0 0 4px rgba(79,208,196,0.18); }
+.semaforo-dot.ajustado{ background:#f0c14b; box-shadow:0 0 0 4px rgba(240,193,75,0.18); }
+.semaforo-dot.perdida{ background:var(--danger); box-shadow:0 0 0 4px rgba(232,100,107,0.18); }
+.try-kpis{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:22px;
+  padding-top:22px; border-top:1px solid var(--line);
+}
+.try-kpis span{ display:block; font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; color:var(--slate); margin-bottom:6px; }
+.try-kpis b{ font-size:1.05rem; }
+@media (max-width:880px){
+  .try-grid{ grid-template-columns:1fr; }
+  .try-inputs{ grid-template-columns:1fr 1fr; }
+  .try-result{ position:static; }
+}
+@media (max-width:520px){
+  .try-inputs{ grid-template-columns:1fr; }
+}
+
 /* ---------- how it works ---------- */
 .how{ padding:108px 0; border-bottom:1px solid var(--line); }
 .how-head{ max-width:56ch; margin-bottom:56px; }
@@ -391,6 +439,67 @@ footer .flinks a:hover{ color:var(--chalk); }
   </div>
 </section>
 
+<section class="try-it" id="calculadora">
+  <div class="shell">
+    <div class="try-head">
+      <span class="eyebrow">Pruébalo tú mismo, sin instalar nada</span>
+      <h2>Ajusta los números y mira el semáforo cambiar</h2>
+      <p>La misma calculadora de la extensión, corriendo aquí mismo. Cambia cualquier campo — funciona igual desde el celular.</p>
+    </div>
+    <div class="try-grid">
+      <div class="try-inputs">
+        <div class="try-field">
+          <label for="tryPrecio">Precio de venta</label>
+          <input type="number" id="tryPrecio" value="89900" inputmode="numeric">
+        </div>
+        <div class="try-field">
+          <label for="tryCosto">Costo proveedor / compra</label>
+          <input type="number" id="tryCosto" value="32000" inputmode="numeric">
+        </div>
+        <div class="try-field">
+          <label for="tryFleteIda">Flete envío ida</label>
+          <input type="number" id="tryFleteIda" value="8500" inputmode="numeric">
+        </div>
+        <div class="try-field">
+          <label for="tryFleteRetorno">Flete de retorno</label>
+          <input type="number" id="tryFleteRetorno" value="3200" inputmode="numeric">
+        </div>
+        <div class="try-field">
+          <label for="tryEmpaque">Empaque / etiqueta</label>
+          <input type="number" id="tryEmpaque" value="0" inputmode="numeric">
+        </div>
+        <div class="try-field">
+          <label for="tryComision">Comisión pasarela (%)</label>
+          <input type="number" id="tryComision" value="0" inputmode="numeric">
+        </div>
+        <div class="try-field">
+          <label for="tryOtros">Otros gastos por pedido</label>
+          <input type="number" id="tryOtros" value="0" inputmode="numeric">
+        </div>
+        <div class="try-field">
+          <label for="tryCpa">CPA — costo publicidad por pedido</label>
+          <input type="number" id="tryCpa" value="12400" inputmode="numeric">
+        </div>
+        <div class="try-field try-field-wide">
+          <label for="tryTasa">Tasa de entrega real: <span id="tryTasaVal" class="mono">78%</span></label>
+          <input type="range" id="tryTasa" min="0" max="100" value="78">
+        </div>
+      </div>
+      <div class="try-result">
+        <div class="try-semaforo">
+          <span class="semaforo-dot" id="trySemaforoDot"></span>
+          <div><b id="trySemaforoLabel">Rentable</b><div class="try-sub" id="trySemaforoSub">Margen saludable con tus números actuales.</div></div>
+        </div>
+        <div class="try-kpis">
+          <div><span>Utilidad / pedido</span><b id="tryKpiUtilidad" class="mono">$ 0</b></div>
+          <div><span>Margen neto</span><b id="tryKpiMargen" class="mono">0%</b></div>
+          <div><span>CPA máximo</span><b id="tryKpiCpaMax" class="mono">$ 0</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="proof">
   <div class="shell proof-grid">
     <div class="proof-copy">
@@ -500,6 +609,84 @@ document.querySelectorAll('.install-link').forEach(function(link){
 
 document.getElementById('yr').textContent = new Date().getFullYear();
 var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ---------- try-it calculator (same formula as the extension's computeMargin) ----------
+(function(){
+  var fmtCOP = new Intl.NumberFormat('es-CO', { style:'currency', currency:'COP', maximumFractionDigits:0 });
+
+  function computeMargin(p){
+    var precio = Number(p.precio)||0;
+    var costo = Number(p.costo)||0;
+    var fleteIda = Number(p.fleteIda)||0;
+    var fleteRetorno = Number(p.fleteRetorno)||0;
+    var empaque = Number(p.empaque)||0;
+    var comisionPct = Number(p.comisionPct)||0;
+    var otrosGastos = Number(p.otrosGastos)||0;
+    var cpa = Number(p.cpa)||0;
+    var tasa = Number(p.tasa)||0;
+    if(precio<=0 || tasa<=0) return null;
+
+    var N = 100;
+    var entregados = N * (tasa/100);
+    var noEntregados = N - entregados;
+
+    var ingresos = entregados * precio;
+    var costoProductoTotal = N * (costo + fleteIda + empaque + otrosGastos);
+    var costoRetornoTotal = noEntregados * fleteRetorno;
+    var costoComisionTotal = entregados * precio * (comisionPct/100);
+    var costoAdsTotal = N * cpa;
+
+    var utilidadTotal = ingresos - costoProductoTotal - costoRetornoTotal - costoComisionTotal - costoAdsTotal;
+    var utilidadPorPedido = utilidadTotal / N;
+    var marginPct = ingresos>0 ? Math.round((utilidadTotal/ingresos)*100) : 0;
+    var cpaMax = (ingresos - costoProductoTotal - costoRetornoTotal - costoComisionTotal) / N;
+
+    var status = 'perdida';
+    if(marginPct >= 15) status = 'rentable';
+    else if(marginPct >= 5) status = 'ajustado';
+
+    return { utilidadPorPedido:utilidadPorPedido, marginPct:marginPct, cpaMax:cpaMax, status:status };
+  }
+
+  var ids = ['tryPrecio','tryCosto','tryFleteIda','tryFleteRetorno','tryEmpaque','tryComision','tryOtros','tryCpa','tryTasa'];
+  var els = {};
+  ids.forEach(function(id){ els[id] = document.getElementById(id); });
+  var dot = document.getElementById('trySemaforoDot');
+  var label = document.getElementById('trySemaforoLabel');
+  var sub = document.getElementById('trySemaforoSub');
+  var kpiUtilidad = document.getElementById('tryKpiUtilidad');
+  var kpiMargen = document.getElementById('tryKpiMargen');
+  var kpiCpaMax = document.getElementById('tryKpiCpaMax');
+  var tasaVal = document.getElementById('tryTasaVal');
+
+  if(!els.tryPrecio) return;
+
+  function update(){
+    tasaVal.textContent = els.tryTasa.value + '%';
+    var m = computeMargin({
+      precio: els.tryPrecio.value, costo: els.tryCosto.value,
+      fleteIda: els.tryFleteIda.value, fleteRetorno: els.tryFleteRetorno.value,
+      empaque: els.tryEmpaque.value, comisionPct: els.tryComision.value,
+      otrosGastos: els.tryOtros.value, cpa: els.tryCpa.value, tasa: els.tryTasa.value
+    });
+    dot.className = 'semaforo-dot' + (m ? ' ' + m.status : '');
+    if(!m){
+      label.textContent = 'Faltan datos';
+      sub.textContent = 'Completa el precio de venta y la tasa de entrega.';
+      kpiUtilidad.textContent = '—'; kpiMargen.textContent = '—'; kpiCpaMax.textContent = '—';
+      return;
+    }
+    if(m.status==='rentable'){ label.textContent = 'Rentable'; sub.textContent = 'Margen saludable con estos números.'; }
+    else if(m.status==='ajustado'){ label.textContent = 'Ajustado'; sub.textContent = 'Rentable, pero con poco margen de error.'; }
+    else { label.textContent = 'Pérdida'; sub.textContent = 'Con estos números, estás perdiendo plata.'; }
+    kpiUtilidad.textContent = fmtCOP.format(m.utilidadPorPedido);
+    kpiMargen.textContent = m.marginPct + '%';
+    kpiCpaMax.textContent = fmtCOP.format(m.cpaMax);
+  }
+
+  ids.forEach(function(id){ els[id].addEventListener('input', update); });
+  update();
+})();
 
 // ---------- hero canvas: the product's own ranking bars, alive ----------
 (function(){
