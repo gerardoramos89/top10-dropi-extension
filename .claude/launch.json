@@ -36,6 +36,18 @@
         "C:\\Users\\GERARD\\AppData\\Local\\Temp\\claude\\C--Users-GERARD-Desktop-Ext-top10-dropi-extension-3\\db98c50d-5a3a-4783-8156-aac9f9941c98\\scratchpad"
       ],
       "port": 8937
+    },
+    {
+      "name": "published-test",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8938",
+        "--directory",
+        "C:\\Users\\GERARD\\AppData\\Local\\Temp\\claude\\C--Users-GERARD-Desktop-Ext-top10-dropi-extension-3\\db98c50d-5a3a-4783-8156-aac9f9941c98\\scratchpad\\published-test"
+      ],
+      "port": 8938
     }
   ]
 }

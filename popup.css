@@ -49,21 +49,36 @@ header.top .today{color:var(--slate); font-size:10px; text-align:right; padding-
 
 nav.tabs{
   display:flex; gap:0; margin-bottom:16px; border-bottom:1px solid var(--line);
-  overflow-x:auto; overflow-y:hidden; flex-wrap:nowrap;
-  scrollbar-width:thin;
-  -webkit-overflow-scrolling:touch;
-  mask-image:linear-gradient(to right, transparent 0, black 10px, black calc(100% - 14px), transparent 100%);
+  flex-wrap:nowrap;
 }
 nav.tabs button{
   background:none; border:none; color:var(--slate); font-family:'Public Sans';
-  font-size:12px; font-weight:600; padding:8px 3px; margin-right:14px;
+  font-size:12px; font-weight:600; padding:8px 2px; margin-right:9px;
   cursor:pointer; border-bottom:2px solid transparent;
   white-space:nowrap; flex:0 0 auto;
 }
-nav.tabs button:last-child{ margin-right:2px; }
+nav.tabs > button:last-child{ margin-right:2px; }
 nav.tabs button.active{color:var(--chalk); border-bottom-color:var(--guayaba);}
-nav.tabs::-webkit-scrollbar{height:3px;}
-nav.tabs::-webkit-scrollbar-thumb{background:var(--line); border-radius:2px;}
+
+.tabs-more{ position:relative; flex:0 0 auto; }
+.tabs-more-btn{
+  background:none; border:none; color:var(--slate); font-family:'Public Sans';
+  font-size:15px; font-weight:700; padding:6px 4px; margin:0 0 0 4px;
+  cursor:pointer; line-height:1; border-bottom:2px solid transparent;
+}
+.tabs-more-btn.has-active{ color:var(--chalk); border-bottom-color:var(--guayaba); }
+.tabs-more-menu{
+  display:none; position:absolute; top:calc(100% + 6px); right:0; z-index:20;
+  background:var(--panel-2); border:1px solid var(--line); border-radius:10px;
+  box-shadow:0 16px 32px -10px rgba(0,0,0,.55); padding:6px; min-width:132px;
+}
+.tabs-more-menu.open{ display:flex; flex-direction:column; }
+.tabs-more-menu .tab-btn{
+  display:block; width:100%; text-align:left; padding:8px 10px; margin:0;
+  border-radius:6px; border-bottom:none; font-size:12.5px;
+}
+.tabs-more-menu .tab-btn:hover{ background:rgba(255,255,255,0.05); }
+.tabs-more-menu .tab-btn.active{ color:var(--guayaba); background:rgba(255,122,69,0.08); }
 
 .view{display:none;}
 .view.active{display:block;}
@@ -348,7 +363,7 @@ input[type="range"]::-moz-range-thumb{
 .lock-banner a{color:var(--guayaba); font-weight:600; text-decoration:underline;}
 
 .lockable.is-locked{
-  opacity:0.45; filter:grayscale(0.3); pointer-events:none; user-select:none;
+  filter:blur(5px) grayscale(0.4); opacity:0.6; pointer-events:none; user-select:none;
 }
 
 /* ================= PLAN PRO — TEMA DORADO / VIP ================= */
@@ -363,10 +378,10 @@ body.pro-theme header.top{
 }
 body.pro-theme header.top::after{
   content:''; position:absolute; left:0; right:0; bottom:-1px; height:1px;
-  background:linear-gradient(90deg, transparent, #f3d98a, #d9ad4f, #f3d98a, transparent);
+  background:linear-gradient(90deg, transparent, #e9c874, #d9ad4f, #e9c874, transparent);
 }
 body.pro-theme header.top h1{
-  background:linear-gradient(120deg, #f6e2a6 0%, #d9ad4f 45%, #b9862a 70%, #f3d98a 100%);
+  background:linear-gradient(120deg, #e9c874 0%, #d9ad4f 45%, #a3711f 70%, #e9c874 100%);
   -webkit-background-clip:text; background-clip:text; color:transparent;
 }
 body.pro-theme header.top .eyebrow{ color:#d9ad4f; }
@@ -378,13 +393,13 @@ body.pro-theme .plan-strip{
 }
 
 .badge-pro{
-  background:linear-gradient(120deg, #f6e2a6, #d9ad4f 55%, #b9862a);
+  background:linear-gradient(120deg, #e9c874, #d9ad4f 55%, #a3711f);
   -webkit-background-clip:text; background-clip:text; color:transparent !important;
   font-weight:700; position:relative;
 }
 
 body.pro-theme button.primary{
-  background:linear-gradient(135deg, #f3d98a, #d9ad4f 55%, #b9862a);
+  background:linear-gradient(135deg, #e9c874, #d9ad4f 55%, #a3711f);
   color:#241a04; text-shadow:0 1px 0 rgba(255,255,255,0.25);
   box-shadow:0 1px 6px rgba(217,173,79,0.35);
 }
@@ -446,7 +461,7 @@ input[type="number"]::-webkit-outer-spin-button{
   font-size:10.5px; font-weight:600; padding:7px 4px; border-radius:7px; cursor:pointer;
 }
 .dist-tab-btn.active{
-  color:#1a1408; background:linear-gradient(135deg, #f3d98a, #d9ad4f 55%, #b9862a);
+  color:#1a1408; background:linear-gradient(135deg, #e9c874, #d9ad4f 55%, #a3711f);
   border-color:transparent;
 }
 body:not(.pro-theme) .dist-tab-btn.active{
@@ -542,7 +557,7 @@ body.pro-theme .audio-analyze-btn{
   border-color:rgba(217,173,79,0.5);
 }
 body.pro-theme .audio-analyze-btn .aab-icon{
-  background:linear-gradient(135deg, #f3d98a, #d9ad4f 55%, #b9862a); color:#241a04;
+  background:linear-gradient(135deg, #e9c874, #d9ad4f 55%, #a3711f); color:#241a04;
 }
 
 /* pequeña animación de "hablando" mientras se reproduce */

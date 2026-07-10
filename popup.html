@@ -23,13 +23,18 @@
   <nav class="tabs">
     <button class="tab-btn active" data-view="ranking">Ranking</button>
     <button class="tab-btn" data-view="rentabilidad">Rentab.</button>
-    <button class="tab-btn" data-view="metaads">Meta Ads<span class="pro-tag">PRO</span></button>
+    <button class="tab-btn" data-view="metaads">M. Ads<span class="pro-tag">PRO</span></button>
     <button class="tab-btn" data-view="distribucion">Distrib.<span class="pro-tag">PRO</span></button>
     <button class="tab-btn" data-view="venta">Vender</button>
-    <button class="tab-btn" data-view="historial">Historial</button>
-    <button class="tab-btn" data-view="ajustes">Ajustes</button>
-    <button class="tab-btn" data-view="ayuda">Ayuda</button>
-    <button class="tab-btn" data-view="legal">Legal</button>
+    <div class="tabs-more">
+      <button type="button" class="tabs-more-btn" id="tabsMoreBtn" aria-haspopup="true" aria-expanded="false">⋯</button>
+      <div class="tabs-more-menu" id="tabsMoreMenu">
+        <button class="tab-btn" data-view="historial">Historial</button>
+        <button class="tab-btn" data-view="ajustes">Ajustes</button>
+        <button class="tab-btn" data-view="ayuda">Ayuda</button>
+        <button class="tab-btn" data-view="legal">Legal</button>
+      </div>
+    </div>
   </nav>
 
   <!-- RANKING VIEW -->
@@ -323,6 +328,56 @@
 
   <!-- AJUSTES VIEW -->
   <section class="view" id="view-ajustes">
+    <div class="section-title"><h2>Plan</h2></div>
+    <div class="stack">
+      <div id="planInfo" class="plan-info"></div>
+
+      <div class="plan-compare">
+        <div class="plan-col">
+          <div class="plan-col-title">Free</div>
+          <ul>
+            <li>Hasta 3 productos</li>
+            <li>Rentabilidad básica</li>
+            <li>Registro de ventas</li>
+            <li>Tu moneda local</li>
+          </ul>
+        </div>
+        <div class="plan-col pro">
+          <div class="plan-col-title">Pro</div>
+          <ul>
+            <li>Hasta 10 productos</li>
+            <li>Conexión con Meta Ads</li>
+            <li>Exportar CSV</li>
+            <li>Resumen diario o semanal automático</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="plan-custom-box">
+        <div class="plan-custom-title">✨ Personalizada</div>
+        <div class="plan-custom-desc">
+          ¿Necesitas más de 10 productos, varias marcas o tiendas, o una función que no existe todavía? Hablemos y armamos una versión hecha a tu medida.
+        </div>
+        <button type="button" class="ghost" id="btnComprarPersonalizada">💬 Pedir versión personalizada</button>
+      </div>
+
+      <div class="buy-row">
+        <button type="button" class="primary" id="btnComprarGumroad">🛒 Comprar Pro</button>
+        <button type="button" class="ghost" id="btnComprarWhatsapp">💬 Comprar por WhatsApp</button>
+      </div>
+      <div class="slider-hint">Al comprar te llega el código de licencia por correo en minutos.</div>
+
+      <div class="field" style="margin-top:6px;">
+        <label>¿Ya tienes tu código? Actívalo aquí</label>
+        <input type="text" id="setLicencia" placeholder="XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX">
+      </div>
+      <div class="form-actions">
+        <button type="button" class="primary" id="btnActivarPro">Verificar y activar Pro</button>
+        <button type="button" class="ghost" id="btnVolverFree">Volver a Free</button>
+      </div>
+      <div id="licenciaStatus" class="empty-state" style="display:none;"></div>
+    </div>
+
     <div class="section-title"><h2>Moneda y país</h2></div>
     <div class="stack">
       <div class="field">
@@ -406,56 +461,6 @@
       <div class="form-actions" style="justify-content:flex-start; gap:8px;">
         <button type="button" class="ghost" id="btnExportCsv2">⬇ Exportar productos + ventas (CSV) <span class="pro-tag">PRO</span></button>
       </div>
-    </div>
-
-    <div class="section-title"><h2>Plan</h2></div>
-    <div class="stack">
-      <div id="planInfo" class="plan-info"></div>
-
-      <div class="plan-compare">
-        <div class="plan-col">
-          <div class="plan-col-title">Free</div>
-          <ul>
-            <li>Hasta 3 productos</li>
-            <li>Rentabilidad básica</li>
-            <li>Registro de ventas</li>
-            <li>Tu moneda local</li>
-          </ul>
-        </div>
-        <div class="plan-col pro">
-          <div class="plan-col-title">Pro</div>
-          <ul>
-            <li>Hasta 10 productos</li>
-            <li>Conexión con Meta Ads</li>
-            <li>Exportar CSV</li>
-            <li>Resumen diario o semanal automático</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="plan-custom-box">
-        <div class="plan-custom-title">✨ Personalizada</div>
-        <div class="plan-custom-desc">
-          ¿Necesitas más de 10 productos, varias marcas o tiendas, o una función que no existe todavía? Hablemos y armamos una versión hecha a tu medida.
-        </div>
-        <button type="button" class="ghost" id="btnComprarPersonalizada">💬 Pedir versión personalizada</button>
-      </div>
-
-      <div class="buy-row">
-        <button type="button" class="primary" id="btnComprarGumroad">🛒 Comprar Pro</button>
-        <button type="button" class="ghost" id="btnComprarWhatsapp">💬 Comprar por WhatsApp</button>
-      </div>
-      <div class="slider-hint">Al comprar te llega el código de licencia por correo en minutos.</div>
-
-      <div class="field" style="margin-top:6px;">
-        <label>¿Ya tienes tu código? Actívalo aquí</label>
-        <input type="text" id="setLicencia" placeholder="XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX">
-      </div>
-      <div class="form-actions">
-        <button type="button" class="primary" id="btnActivarPro">Verificar y activar Pro</button>
-        <button type="button" class="ghost" id="btnVolverFree">Volver a Free</button>
-      </div>
-      <div id="licenciaStatus" class="empty-state" style="display:none;"></div>
     </div>
   </section>
 
