@@ -187,10 +187,7 @@ h1,h2,h3{
 /* ---------- proof sections ---------- */
 .proof{
   padding:108px 0; border-bottom:1px solid var(--line);
-  opacity:0; transform:translateY(28px);
-  transition:opacity .7s ease, transform .7s ease;
 }
-.proof.in-view{ opacity:1; transform:translateY(0); }
 .proof-grid{
   display:grid; grid-template-columns:.86fr 1.14fr; gap:64px; align-items:center;
 }
@@ -236,9 +233,7 @@ h1,h2,h3{
 .how-steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:32px; }
 .how-step{
   border:1px solid var(--line); border-radius:10px; padding:26px 24px; background:var(--panel);
-  opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s ease;
 }
-.how-step.in-view{ opacity:1; transform:translateY(0); }
 .how-step .idx{
   font-family:'IBM Plex Mono'; font-size:.78rem; color:var(--slate);
   border-bottom:1px solid var(--line); padding-bottom:12px; margin-bottom:16px;
@@ -504,20 +499,7 @@ document.querySelectorAll('.install-link').forEach(function(link){
 });
 
 document.getElementById('yr').textContent = new Date().getFullYear();
-
-// ---------- scroll-reveal ----------
 var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-var revealables = document.querySelectorAll('.proof, .how-step');
-if(reduced){
-  revealables.forEach(function(el){ el.classList.add('in-view'); });
-} else {
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){ entry.target.classList.add('in-view'); }
-    });
-  }, { threshold:.1, rootMargin:'0px 0px -8% 0px' });
-  revealables.forEach(function(el){ io.observe(el); });
-}
 
 // ---------- hero canvas: the product's own ranking bars, alive ----------
 (function(){
