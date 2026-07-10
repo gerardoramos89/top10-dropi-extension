@@ -12,7 +12,6 @@
   // Códigos especiales para pruebas (no pasan por Gumroad). No son secretos reales: cualquiera
   // que lea el código fuente publicado puede verlos. Se les dio forma de código de licencia
   // random para que no sean adivinables a simple vista, pero cámbialos o quítalos si no los quieres.
-  const TEST_PRO_CODE = 'QK7M-2X9P-VL4T-8HRW';   // activa Pro sobre TUS datos actuales, para que alguien pruebe las funciones.
   const DEMO_CODE = 'ZP3K-9WQL-4XMT-2GHD';       // activa Pro + carga 10 productos, ventas y gasto de Ads simulados, para mostrar la app "viva".
   const TRIAL_CODE = 'RT8N-3LKQ-9XZP-6MWV';      // activa Pro por tiempo limitado.
   const TRIAL_DAYS = 5;                      // 👈 edita este número para cambiar cuántos días dura el Pro de prueba.
@@ -244,15 +243,6 @@
     if(!code){ licenciaSetStatus('Escribe tu código de licencia.', 'error'); return; }
 
     const codeUpper = code.toUpperCase();
-
-    if(codeUpper === TEST_PRO_CODE.toUpperCase()){
-      plan = 'pro'; planExpiresAt = null;
-      savePlan();
-      applyPlanUI();
-      licenciaSetStatus('Modo prueba: Pro activado sobre tus datos actuales (no es una compra real, no expira).', 'ok');
-      notifyDevActivation('Prueba interna (PRUEBA-PRO)');
-      return;
-    }
 
     if(codeUpper === TRIAL_CODE.toUpperCase()){
       plan = 'pro';
