@@ -215,7 +215,7 @@ h1,h2,h3{
   border-bottom:1px solid var(--line);
 }
 .shot-frame .bar i{ width:8px; height:8px; border-radius:50%; background:var(--line); }
-.shot-frame img{ display:block; width:100%; height:520px; object-fit:cover; object-position:top; }
+.shot-frame img{ display:block; width:100%; height:auto; max-height:560px; object-fit:contain; background:var(--ink); }
 
 .split-shots{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
 .split-shots .shot-frame img{ height:auto; max-height:460px; object-fit:contain; background:var(--ink); }
