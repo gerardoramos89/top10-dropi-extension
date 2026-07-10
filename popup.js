@@ -890,12 +890,33 @@
     } else {
       empty.style.display='none';
       const sorted = [...ventas].sort((a,b)=> b.fecha.localeCompare(a.fecha));
+
+      const hoy = new Date().toISOString().slice(0,10);
+      const ayerDate = new Date(); ayerDate.setDate(ayerDate.getDate()-1);
+      const ayer = ayerDate.toISOString().slice(0,10);
+      function fechaLabel(fecha){
+        if(fecha === hoy) return 'Hoy';
+        if(fecha === ayer) return 'Ayer';
+        const d = new Date(fecha + 'T00:00:00');
+        const opts = { day:'numeric', month:'short' };
+        if(fecha.slice(0,4) !== hoy.slice(0,4)) opts.year = 'numeric';
+        return d.toLocaleDateString('es-CO', opts);
+      }
+
+      let currentGroup = null;
       sorted.forEach(v=>{
+        if(v.fecha !== currentGroup){
+          currentGroup = v.fecha;
+          const dayTotal = sorted.filter(x=>x.fecha===v.fecha).reduce((s,x)=>s+Number(x.valor),0);
+          const header = document.createElement('div');
+          header.className = 'sale-day-header';
+          header.innerHTML = `<span class="sdh-label">${fechaLabel(v.fecha)}</span><span class="sdh-total">${fmtCOP(dayTotal)}</span>`;
+          list.appendChild(header);
+        }
         const p = productos.find(pr=>pr.id===v.productoId);
         const row = document.createElement('div');
         row.className = 'sale-row';
         row.innerHTML = `
-          <div class="date">${v.fecha}</div>
           <div class="name">${p ? escapeHtml(p.nombre) : '(eliminado)'}</div>
           <div class="qty">${v.unidades}u</div>
           <div class="val">${fmtCOP(v.valor)}</div>
