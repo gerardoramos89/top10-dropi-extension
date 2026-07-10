@@ -310,7 +310,7 @@ footer .flinks a:hover{ color:var(--chalk); }
       <span class="brand-mark"></span>
       <span class="brand-name">Top 10 Tracker</span>
     </div>
-    <a class="nav-cta" href="https://coordtss.gumroad.com/l/dmjex" target="_blank" rel="noopener">Instalar gratis</a>
+    <a class="nav-cta install-link" href="#" target="_blank" rel="noopener">Instalar gratis</a>
   </div>
 </nav>
 
@@ -321,7 +321,7 @@ footer .flinks a:hover{ color:var(--chalk); }
       <h1>Sabes qué vendes.<br>¿Sabes qué te deja&nbsp;plata&nbsp;de&nbsp;verdad?</h1>
       <p class="lede">Top 10 Tracker calcula la rentabilidad real de cada producto — flete de ida y de retorno, comisión de pasarela, publicidad, tasa de entrega — directo en tu navegador. Nada de hojas de cálculo ni de adivinar a fin de mes.</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="https://coordtss.gumroad.com/l/dmjex" target="_blank" rel="noopener">Empieza gratis</a>
+        <a class="btn btn-primary install-link" href="#" target="_blank" rel="noopener">Empieza gratis</a>
         <a class="btn btn-ghost" href="#pricing">Ver plan Pro</a>
       </div>
       <div class="hero-stats">
@@ -447,7 +447,7 @@ footer .flinks a:hover{ color:var(--chalk); }
           <li>Registro de ventas</li>
           <li>Tu moneda local</li>
         </ul>
-        <a class="btn btn-ghost" href="https://coordtss.gumroad.com/l/dmjex" target="_blank" rel="noopener">Instalar gratis</a>
+        <a class="btn btn-ghost install-link" href="#" target="_blank" rel="noopener">Instalar gratis</a>
       </div>
       <div class="plan plan-pro">
         <div class="plan-name">👑 Pro</div>
@@ -470,7 +470,7 @@ footer .flinks a:hover{ color:var(--chalk); }
     <h2>Instálala hoy. Tu top 10 te está esperando.</h2>
     <p>Sin API pública de Dropi ni de otras plataformas: tú administras tu top 10, registras ventas y calculas tu rentabilidad real.</p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="https://coordtss.gumroad.com/l/dmjex" target="_blank" rel="noopener">Empieza gratis</a>
+      <a class="btn btn-primary install-link" href="#" target="_blank" rel="noopener">Empieza gratis</a>
       <a class="btn btn-ghost" href="https://wa.me/573183863469?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20de%20Top%2010%20Tracker" target="_blank" rel="noopener">Escribir por WhatsApp</a>
     </div>
   </div>
@@ -488,6 +488,21 @@ footer .flinks a:hover{ color:var(--chalk); }
 </footer>
 
 <script>
+// ⚠️ Reemplaza esto por la URL real de tu ficha en la Chrome Web Store una vez
+// que la publiques (se ve así: https://chromewebstore.google.com/detail/top-10-tracker/tu-id-aqui).
+var CHROME_STORE_URL = 'REEMPLAZA_CON_TU_URL_DE_CHROME_WEB_STORE';
+
+document.querySelectorAll('.install-link').forEach(function(link){
+  link.addEventListener('click', function(e){
+    if(CHROME_STORE_URL.includes('REEMPLAZA')){
+      e.preventDefault();
+      alert('Falta configurar CHROME_STORE_URL en el <script> del landing page, con el link real de tu ficha en la Chrome Web Store.');
+      return;
+    }
+    link.href = CHROME_STORE_URL;
+  });
+});
+
 document.getElementById('yr').textContent = new Date().getFullYear();
 
 // ---------- scroll-reveal ----------
