@@ -1069,10 +1069,47 @@
     speak(buildAnalysisSpeech(p, m), this);
   });
 
+  function renderVentasPorMes(){
+    const container = $('#ventasPorMesBody');
+    const empty = $('#ventasPorMesEmpty');
+    if(!container) return;
+    if(ventas.length===0){
+      container.innerHTML = '';
+      if(empty) empty.style.display = 'block';
+      return;
+    }
+    if(empty) empty.style.display = 'none';
+
+    const meses = {};
+    ventas.forEach(v=>{
+      const mes = v.fecha.slice(0,7);
+      if(!meses[mes]) meses[mes] = {};
+      meses[mes][v.productoId] = (meses[mes][v.productoId]||0) + Number(v.unidades);
+    });
+
+    const nombresMeses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    const mesesOrdenados = Object.keys(meses).sort((a,b)=>b.localeCompare(a));
+
+    container.innerHTML = mesesOrdenados.map(mes=>{
+      const [anio, mm] = mes.split('-');
+      const label = `${nombresMeses[Number(mm)-1]} ${anio}`;
+      const productosDelMes = Object.entries(meses[mes]).map(([productoId, unidades])=>{
+        const p = productos.find(pr=>pr.id===productoId);
+        return { nombre: p ? p.nombre : '(eliminado)', unidades };
+      }).sort((a,b)=>b.unidades-a.unidades);
+      const totalMes = productosDelMes.reduce((s,d)=>s+d.unidades,0);
+      const rows = productosDelMes.map(d=>`
+        <div class="sale-row"><div class="name">${escapeHtml(d.nombre)}</div><div class="qty">${d.unidades}u</div></div>
+      `).join('');
+      return `<div class="sale-day-header"><span class="sdh-label">${label}</span><span class="sdh-total">${totalMes}u</span></div>${rows}`;
+    }).join('');
+  }
+
   function renderAll(){
     renderRankboard();
     renderProductList();
     renderVentaForm();
+    renderVentasPorMes();
     applyPlanUI();
   }
 
